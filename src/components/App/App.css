@@ -4,3 +4,15 @@
   padding: 2rem;
   text-align: center;
 }
+
+.App {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (orientation: portrait) {
+    flex-direction: column;
+  }
+
+}
