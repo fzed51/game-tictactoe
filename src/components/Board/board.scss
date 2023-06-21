@@ -1,0 +1,37 @@
+.board {
+    --board : min(90vh, 60vw);
+    --board : min(90svh, 60vw);
+    width: var(--board);
+    height: var(--board);
+    background-color: rgba(255, 255, 255, 0.1);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    .cell {
+        border: none;
+        font-size: calc(var(--board) / 4);
+        line-height: 1em;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.c0, &.c1 {
+            border-right: solid #888 2px;
+        }
+        &.l0, &.l1 {
+            border-bottom: solid #888 2px;
+        }
+        &.empty {
+            cursor: pointer;
+        }
+        &.player1 {
+            color: hsl(0 100% 67% / 1);
+        }
+        &.player2 {
+            color: hsl(240 100% 67% / 1);;
+        }
+    }
+
+
+}
