@@ -80,7 +80,6 @@ export const useTictactoeRules = () => {
 }
 
 const whoWon = (nextBoard: BoardTable): EndGame => {
-    console.log(nextBoard)
     for (let i = 0; i < 3; i++) {
         const line = (nextBoard[getCell(i, 0)] ?? 0)
             + (nextBoard[getCell(i, 1)] ?? 0)
@@ -90,49 +89,36 @@ const whoWon = (nextBoard: BoardTable): EndGame => {
             + (nextBoard[getCell(2, i)] ?? 0)
         if (Math.abs(line) === 3) {
             if (line / 3 === PLAYER1) {
-                console.log(PLAYER1)
                 return PLAYER1
             }
-            console.log(PLAYER2)
             return PLAYER2
         }
         if (Math.abs(column) === 3) {
             if (column / 3 === PLAYER1) {
-                console.log(PLAYER1)
                 return PLAYER1
             }
-            console.log(PLAYER2)
             return PLAYER2
         }
     }
-    const diag1 = (nextBoard[getCell(0, 0)] ?? 0)
-        + (nextBoard[getCell(1, 1)] ?? 0)
-        + (nextBoard[getCell(2, 2)] ?? 0)
-    const diag2 = (nextBoard[getCell(0, 2)] ?? 0)
-        + (nextBoard[getCell(1, 1)] ?? 0)
-        + (nextBoard[getCell(2, 0)] ?? 0)
+    let diag1 = 0
+    let diag2 = 0
+    for (let i = 0; i < 3; i++) {
+        diag1 += nextBoard[getCell(i, i)] ?? 0
+        diag2 += nextBoard[getCell(i, 2-i)] ?? 0
+    }
     if (Math.abs(diag1) === 3) {
         if (diag1 / 3 === PLAYER1) {
-            console.log(PLAYER1)
             return PLAYER1
         }
         return PLAYER2
     }
     if (Math.abs(diag2) === 3) {
         if (diag2 / 3 === PLAYER1) {
-            console.log(PLAYER1)
             return PLAYER1
         }
-        console.log(PLAYER2)
-        console.log(PLAYER2)
         return PLAYER2
     }
-    console.log(
-        nextBoard.filter(c => c === null),
-        nextBoard.filter(c => c === null).length
-    )
     if (nextBoard.filter(c => c === null).length === 0) {
-        console.log('FULL')
         return "FULL"
     }
     return null;
