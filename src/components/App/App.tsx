@@ -1,13 +1,14 @@
 import { useEffect } from 'react'
 import { useTictactoeRules } from '../../hooks/useTictactoeRules'
 import useChrono from '../../hooks/useChrono'
-import { Cell, PLAYER1, PLAYER2 } from '../../types'
+import { BoardTable, Cell, PLAYER1, PLAYER2 } from '../../types'
 import Board from '../Board/Board'
 import HonorP1 from '../Honor/HonorP1'
 import HonorP2 from '../Honor/HonorP2'
 import NoHonor from '../Honor/NoHonor'
 import Info from '../Info/Info'
 import './App.css'
+import { useTictactoeAi } from '../../hooks/useTictactoeAi'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
     onReset
   ] = useTictactoeRules()
   const [chrono, start, , stop] = useChrono()
+  const [findBestPlay] = useTictactoeAi()
 
   const handlePlay = (cell: Cell) => onPlay(nextPlayer, cell)
 
@@ -37,6 +39,20 @@ function App() {
         stop()
       }
     }, [winner]
+  )
+
+  useEffect(
+    () => {
+      if (winner !== null) {
+        return;
+      }
+      if (nextPlayer === PLAYER2) {
+        onPlay(nextPlayer, findBestPlay([...board] as BoardTable, nextPlayer))
+      }
+      if (nextPlayer === PLAYER1) {
+        //onPlay(nextPlayer, findBestPlay([...board] as BoardTable, nextPlayer))
+      }
+    }, [nextPlayer]
   )
 
   if (winner === 'FULL') {
